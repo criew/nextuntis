@@ -4,12 +4,12 @@ const httpClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL ?? '',
 })
 
-httpClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token')
+export function setAuthToken(token: string | null) {
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+    httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  } else {
+    delete httpClient.defaults.headers.common['Authorization']
   }
-  return config
-})
+}
 
 export default httpClient
