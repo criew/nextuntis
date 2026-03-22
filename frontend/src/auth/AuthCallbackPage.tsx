@@ -6,9 +6,10 @@ export default function AuthCallbackPage() {
   const auth = useAuth()
 
   if (auth.error) {
+    console.error('Auth callback error:', auth.error)
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <Typography color="error">Anmeldefehler: {auth.error.message}</Typography>
+        <Typography color="error">Anmeldung fehlgeschlagen. Bitte versuche es erneut.</Typography>
       </Box>
     )
   }

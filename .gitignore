@@ -60,7 +60,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
-!.env.development
+!.env.*.example
 
 # Claude
 /.claude/settings.local.json
