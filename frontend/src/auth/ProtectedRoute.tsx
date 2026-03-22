@@ -1,6 +1,7 @@
 import { Box, CircularProgress } from '@mui/material'
 import { useAuth } from 'react-oidc-context'
 import { Navigate, Outlet } from 'react-router'
+import NavBar from '../components/NavBar'
 
 export default function ProtectedRoute() {
   const auth = useAuth()
@@ -17,5 +18,10 @@ export default function ProtectedRoute() {
     return <Navigate to="/login" replace />
   }
 
-  return <Outlet />
+  return (
+    <>
+      <NavBar />
+      <Outlet />
+    </>
+  )
 }
