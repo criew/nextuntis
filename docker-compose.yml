@@ -40,6 +40,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-nextuntis}
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/nextuntis
       SERVER_PORT: 8081
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
     ports:
       - "8081:8081"
     depends_on:
@@ -49,7 +50,13 @@ services:
         condition: service_healthy
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        VITE_OIDC_AUTHORITY: ${VITE_OIDC_AUTHORITY:-http://localhost:8180/realms/nextuntis}
+        VITE_OIDC_CLIENT_ID: ${VITE_OIDC_CLIENT_ID:-nextuntis-frontend}
+        VITE_OIDC_REDIRECT_URI: ${VITE_OIDC_REDIRECT_URI:-http://localhost:3000/callback}
+        VITE_OIDC_POST_LOGOUT_REDIRECT_URI: ${VITE_OIDC_POST_LOGOUT_REDIRECT_URI:-http://localhost:3000/login}
     ports:
       - "3000:80"
     depends_on:
