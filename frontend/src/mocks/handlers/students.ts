@@ -3,7 +3,7 @@ import type { components } from '../../types/generated/api'
 
 type StudentResponse = components['schemas']['StudentResponse']
 
-const BASE_URL = 'http://localhost:8081'
+const BASE_URL = 'http://localhost'
 
 const studentsFixture: StudentResponse[] = [
   {
