@@ -1,0 +1,19 @@
+[versions]
+spring-boot = "3.5.0"
+spring-dependency-management = "1.1.7"
+openapi-generator = "7.10.0"
+spotless = "7.0.2"
+swagger-annotations = "2.2.27"
+jackson-nullable = "0.2.6"
+springdoc = "2.8.4"
+
+[libraries]
+swagger-annotations = { module = "io.swagger.core.v3:swagger-annotations", version.ref = "swagger-annotations" }
+jackson-databind-nullable = { module = "org.openapitools:jackson-databind-nullable", version.ref = "jackson-nullable" }
+springdoc-openapi-starter = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: nextuntis API
+  description: Ein Verwaltungssystem für Schulen der neuen Generation.
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8081
+    description: Local development
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: getHealth
+      tags:
+        - health
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: UP
