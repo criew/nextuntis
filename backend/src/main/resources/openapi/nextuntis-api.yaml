@@ -23,7 +23,138 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthResponse'
 
+  /api/students:
+    get:
+      summary: List all students
+      operationId: listStudents
+      tags:
+        - students
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: A list of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentResponse'
+        '401':
+          description: Unauthorized
+    post:
+      summary: Create a new student
+      operationId: createStudent
+      tags:
+        - students
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentRequest'
+      responses:
+        '201':
+          description: Student created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponse'
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthorized
+
+  /api/students/{id}:
+    get:
+      summary: Get a student by ID
+      operationId: getStudent
+      tags:
+        - students
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Student found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Student not found
+    put:
+      summary: Update a student
+      operationId: updateStudent
+      tags:
+        - students
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentRequest'
+      responses:
+        '200':
+          description: Student updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponse'
+        '400':
+          description: Validation error
+        '401':
+          description: Unauthorized
+        '404':
+          description: Student not found
+    delete:
+      summary: Delete a student
+      operationId: deleteStudent
+      tags:
+        - students
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Student deleted
+        '401':
+          description: Unauthorized
+        '404':
+          description: Student not found
+
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     HealthResponse:
       type: object
@@ -31,3 +162,68 @@ components:
         status:
           type: string
           example: UP
+
+    StudentRequest:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - dateOfBirth
+        - gradeLevel
+      properties:
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: Max
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: Mustermann
+        dateOfBirth:
+          type: string
+          format: date
+          example: '2010-05-15'
+        gradeLevel:
+          type: integer
+          minimum: 1
+          maximum: 13
+          example: 7
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: max.mustermann@schule.de
+
+    StudentResponse:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - dateOfBirth
+        - gradeLevel
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        firstName:
+          type: string
+          example: Max
+        lastName:
+          type: string
+          example: Mustermann
+        dateOfBirth:
+          type: string
+          format: date
+          example: '2010-05-15'
+        gradeLevel:
+          type: integer
+          example: 7
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: max.mustermann@schule.de
