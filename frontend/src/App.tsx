@@ -1,15 +1,22 @@
-import { Container, Typography } from '@mui/material'
+import { Navigate, Route, Routes } from 'react-router'
+import StudentListPage from './features/students/StudentListPage'
+import StudentFormPage from './features/students/StudentFormPage'
+import LoginPage from './auth/LoginPage'
+import AuthCallbackPage from './auth/AuthCallbackPage'
+import ProtectedRoute from './auth/ProtectedRoute'
 
 function App() {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h3" component="h1" gutterBottom>
-        NextUntis
-      </Typography>
-      <Typography variant="body1">
-        Ein Verwaltungssystem für Schulen der neuen Generation.
-      </Typography>
-    </Container>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/callback" element={<AuthCallbackPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Navigate to="/students" replace />} />
+        <Route path="/students" element={<StudentListPage />} />
+        <Route path="/students/new" element={<StudentFormPage />} />
+        <Route path="/students/:id/edit" element={<StudentFormPage />} />
+      </Route>
+    </Routes>
   )
 }
 

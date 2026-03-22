@@ -1,1 +1,4 @@
-databaseChangeLog: []
+databaseChangeLog:
+  - include:
+      file: db/changelog/001_create_students.yaml
+      relativeToChangelogFile: false
