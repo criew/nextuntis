@@ -38,7 +38,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME:-nextuntis}
       SPRING_DATASOURCE_USERNAME: ${DB_USER:-nextuntis}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-nextuntis}
-      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/nextuntis
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: ${SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI:-http://localhost:8180/realms/nextuntis}
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/nextuntis/protocol/openid-connect/certs
       SERVER_PORT: 8081
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
     ports:

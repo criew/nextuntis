@@ -8,6 +8,9 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtValidators;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -40,6 +43,15 @@ public class SecurityConfig {
         .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
     return http.build();
+  }
+
+  @Bean
+  public JwtDecoder jwtDecoder(
+      @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") String jwkSetUri,
+      @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuerUri) {
+    NimbusJwtDecoder decoder = NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
+    decoder.setJwtValidator(JwtValidators.createDefaultWithIssuer(issuerUri));
+    return decoder;
   }
 
   @Bean
